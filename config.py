@@ -7,6 +7,12 @@ OUTPUT_FOLDER = "output"
 CAMERA_IDS = [0,1] # Initial default
 CAMERA_COUNT = 2
 
+# Calibration Board Parameters
+BOARD_ROWS = 6
+BOARD_COLUMNS = 9
+CHECKER_WIDTH_MM = 25  # Checker width in millimeters
+BOARD_SIZE = (BOARD_COLUMNS, BOARD_ROWS) #Chess board size
+
 # Flask ports
 CALIBRATION_PORT = 5001
 POSE_2D_PORT = 5002

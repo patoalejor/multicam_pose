@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 import os
-from config import CALIBRATION_FOLDER, INTRINSIC_PARAMS, EXTRINSIC_PARAMS, CALIBRATED
+from config import CALIBRATION_FOLDER, INTRINSIC_PARAMS, EXTRINSIC_PARAMS, CALIBRATED, BOARD_SIZE
 import pickle
 
 def get_camera_feed(camera_id):
@@ -56,7 +56,7 @@ def collect_calibration_images(camera_ids, num_images=20, image_delay=1):
     cv2.destroyAllWindows()
     return all_images, image_count
 
-def calibrate_cameras(all_images):
+def calibrate_cameras(all_images, board_size):
     """Calibrates cameras using collected images and saves calibration parameters."""
     
     if not all_images or not all_images[list(all_images.keys())[0]]:
@@ -64,7 +64,6 @@ def calibrate_cameras(all_images):
         return False, {} , {}
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-    board_size = (9,6) # Chess board size
     
     objp = np.zeros((board_size[0] * board_size[1], 3), np.float32)
     objp[:, :2] = np.mgrid[0:board_size[0], 0:board_size[1]].T.reshape(-1, 2)

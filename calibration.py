@@ -5,7 +5,7 @@ import cv2
 import threading
 import numpy as np
 from utils import get_camera_feed, collect_calibration_images, calibrate_cameras, save_calibration_data, load_calibration_data
-from config import CALIBRATION_PORT, CAMERA_IDS, CALIBRATION_FOLDER, INTRINSIC_PARAMS, EXTRINSIC_PARAMS, CALIBRATED
+from config import CALIBRATION_PORT, CAMERA_IDS, CALIBRATION_FOLDER, INTRINSIC_PARAMS, EXTRINSIC_PARAMS, CALIBRATED, BOARD_SIZE
 import os
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def process_calibration(camera_ids):
     print("Starting calibration process")
     all_images, num_images = collect_calibration_images(camera_ids, num_images=20)
     if all_images and num_images:
-        success, intrinsic_params, extrinsic_params = calibrate_cameras(all_images)
+        success, intrinsic_params, extrinsic_params = calibrate_cameras(all_images, board_size=BOARD_SIZE)
         if success:
             save_calibration_data(intrinsic_params, extrinsic_params)
             INTRINSIC_PARAMS = intrinsic_params

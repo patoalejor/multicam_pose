@@ -32,4 +32,4 @@ class Ui_MainWindow(object):
         self.folderLineEdit.setObjectName("folderLineEdit")
         self.horizontalLayout_2.addWidget(self.folderLineEdit)
         self.folderButton = QtWidgets.QPushButton(self.centralwidget)
-        self.folder
+        # self.folder
