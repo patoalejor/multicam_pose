@@ -1,0 +1,7 @@
+opencv-python
+flask
+numpy
+PyQt5
+pyqtgraph
+requests
+mediapipe
