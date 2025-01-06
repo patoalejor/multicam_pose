@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multi-Camera Pose Estimation</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+</head>
+<body>
+  <h1>Multi-Camera 3D Pose Estimation</h1>
+  <form method="POST">
+      <div>
+          <label for="output_folder">Output Folder:</label>
+          <input type="text" id="output_folder" name="output_folder" required>
+      </div>
+      <div>
+          <label for="camera_ids">Camera IDs (comma-separated):</label>
+          <input type="text" id="camera_ids" name="camera_ids" value="0,1" required>
+      </div>
+      <div>
+          <button type="submit">Start</button>
+      </div>
+  </form>
+    {% if message %}
+    <p class="message">{{ message }}</p>
+    {% endif %}
+
+    {% if error %}
+       <p class="error">{{ error }}</p>
+    {% endif %}
+  <div class="container">
+     <div class="camera-container">
+         {% if images %}
+             {% if images[0] %}
+                 <img src="{{ images[0] }}" alt="Camera 1" class="camera-feed">
+             {% endif %}
+              {% if images[1] %}
+                <img src="{{ images[1] }}" alt="Camera 2" class="camera-feed">
+              {% endif %}
+         {% endif %}
+     </div>
+     <div id="plot-container"></div>
+  </div>
+</body>
+
+{% if x_values %}
+<script>
+ var x_values = {{ x_values | tojson }};
+ var y_values = {{ y_values | tojson }};
+ var z_values = {{ z_values | tojson }};
+ 
+  var trace = {
+    x: x_values.map((val, index) => index),
+    y: z_values,
+    type: 'bar'
+  };
+
+  var data = [trace];
+  var layout = {
+      title: '3D Pose Coordinates'
+  };
+
+  Plotly.newPlot('plot-container', data, layout);
+</script>
+{% endif %}
+</html>
